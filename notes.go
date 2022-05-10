@@ -13,6 +13,24 @@ import (
 
 var teammates = []string{"Your", "team's", "names", "go", "here"}
 
+// loadFromFile opens the file at the given location and returns its
+// contents. This reads the entire file into memory so make sure not
+// to shoot yourself in the foot here.
+func loadFromFile(path string) ([]byte, error) {
+	f, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return f, nil
+}
+
+// marshalFileContents takes in the bytes from a file read and
+// attempts to marshal them into the teammates string slice
+func marshalFileContents(b []byte) error {
+	teammates = strings.Split(string(b), ",")
+	return nil
+}
+
 // remove pulls the element at index i from slice of strings s
 // https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang
 func remove(s []string, i int) []string {
@@ -48,6 +66,20 @@ func generateNotes(s string) (string, error) {
 
 // start is the default entrypoint to our app
 func start(c *cli.Context) error {
+	if fromFile != "" {
+		// attempt to load from disk
+		f, err := loadFromFile(fromFile)
+		if err != nil {
+			fmt.Printf("could not read from provided file: %v\n", err)
+			return err
+		}
+
+		// attempt to unmarshal the file contents into a string slice
+		if err := marshalFileContents(f); err != nil {
+			fmt.Printf("could not marshal file contents to string slice: %v\n", err)
+			return err
+		}
+	}
 	if guest.Value() != nil {
 		for _, member := range guest.Value() {
 			teammates = append(teammates, member)

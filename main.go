@@ -7,8 +7,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// guest indicates whether any special guests are joining us today
-var guest cli.StringSlice
+// flags
+var (
+	// guest indicates whether any special guests are joining us today
+	guest cli.StringSlice
+
+	// fromFile indicates if we should load our teammate slice from
+	// the given file path
+	fromFile string
+)
 
 func main() {
 	app := &cli.App{
@@ -20,6 +27,11 @@ func main() {
 				Name:        "guest",
 				Usage:       "name of any extra special guests joining standup today",
 				Destination: &guest,
+			},
+			&cli.StringFlag{
+				Name:        "from-file",
+				Usage:       "path to load teammate string slice from",
+				Destination: &fromFile,
 			},
 		},
 	}
