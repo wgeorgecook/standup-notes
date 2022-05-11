@@ -27,6 +27,7 @@ func main() {
 				Name: "notes-order",
 				Usage: "order to cycle through teammate array," +
 					" options are 'alphabetical', 'reverse-alphabetical'" +
+					"`in-place` (exactly as provided)" +
 					", and 'random', with 'random' being the default behavior.",
 				Destination: &order,
 			},

@@ -17,6 +17,8 @@ func selectTeammate(a []string, idx int) (string, []string) {
 		return a[idx], a
 	case ReverseAlphabetical:
 		return pop(a, len(a)-1)
+	case InPlace:
+		return a[idx], a
 	default:
 		return popRandom(a)
 	}

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"sort"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -35,11 +37,14 @@ const (
 	ReverseAlphabetical = "reverse-alphabetical"
 	// Randomly cycle through teammate list
 	Random = "random"
+	// Cycle through the teammate list as it is provided
+	InPlace = "in-place"
 )
 
 // initConfig takes the values from the provided flags and performs
 // logic resulting from the callers's configuration
 func initConfig() error {
+	// load teammates list from file if a file is provided
 	if fromFile != "" {
 		// attempt to load from disk
 		f, err := loadFromFile(fromFile)
@@ -54,10 +59,24 @@ func initConfig() error {
 			return err
 		}
 	}
+
+	// add any guests to the teammates array if guests are provided
 	if guest.Value() != nil {
 		for _, member := range guest.Value() {
 			teammates = append(teammates, member)
 		}
+	}
+
+	// if the order provided is sorted by the alphabet, make sure to
+	// put it in alphabetical order so when we traverse it, things
+	// are where we expect
+	if order == Alphabetical || order == ReverseAlphabetical {
+		// trim whitespace
+		for i, s := range teammates {
+			teammates[i] = strings.TrimSpace(s)
+		}
+		// sort the teammates list for processing
+		sort.Strings(teammates)
 	}
 
 	return nil
