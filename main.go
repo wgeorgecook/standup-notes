@@ -7,16 +7,6 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// flags
-var (
-	// guest indicates whether any special guests are joining us today
-	guest cli.StringSlice
-
-	// fromFile indicates if we should load our teammate slice from
-	// the given file path
-	fromFile string
-)
-
 func main() {
 	app := &cli.App{
 		Name:   "Standup Notes",
@@ -32,6 +22,13 @@ func main() {
 				Name:        "from-file",
 				Usage:       "path to load teammate string slice from",
 				Destination: &fromFile,
+			},
+			&cli.StringFlag{
+				Name: "notes-order",
+				Usage: "order to cycle through teammate array," +
+					" options are 'alphabetical', 'reverse-alphabetical'" +
+					", and 'random', with 'random' being the default behavior.",
+				Destination: &order,
 			},
 		},
 	}
