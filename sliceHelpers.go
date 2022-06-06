@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -26,6 +25,5 @@ func popRandom(a []string) (string, []string) {
 func pop(a []string, i int) (string, []string) {
 	popped := a[i]
 	rest := remove(a, i)
-	fmt.Printf("Strat: %s\npopped: %s\nrest: %v\n", order, popped, rest)
 	return popped, rest
 }
