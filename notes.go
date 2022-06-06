@@ -9,6 +9,28 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// getUnderscores prints a - for every letter in teamname plus 2
+func getUnderscores(teamName string) (underscores string) {
+	underscores = "--"
+	for i := 0; i <= len(teamName); i++ {
+		underscores += "-"
+	}
+	return
+}
+
+// getTeamName accepts user input for the team name of the day
+func getTeamName() (string, error) {
+	fmt.Print("Team Name: ")
+	reader := bufio.NewReader(os.Stdin)
+	// ReadString will block until the delimiter is entered
+	in, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("An error occured while reading input. Please try again", err)
+		return "", err
+	}
+	return fmt.Sprintf("%s%s\n", in, getUnderscores(in)), nil
+}
+
 // selectTeammate uses the given notes-order strategy to determine
 // which teammate we are building notes for in this instance
 func selectTeammate(a []string, idx int) (string, []string) {
@@ -28,7 +50,7 @@ func selectTeammate(a []string, idx int) (string, []string) {
 // buildTeammateNotes accepts user input and builds the notes we want to
 // return to the stdout
 func buildTeammateNotes(s string) (string, error) {
-	fmt.Printf("Notes for %s: ", s)
+	fmt.Printf("Notes for %s: ", strings.TrimSpace(s))
 	// Taking input from user
 	reader := bufio.NewReader(os.Stdin)
 	// ReadString will block until the delimiter is entered
@@ -37,7 +59,7 @@ func buildTeammateNotes(s string) (string, error) {
 		fmt.Println("An error occured while reading input. Please try again", err)
 		return "", err
 	}
-	return fmt.Sprintf("%s: %s", s, in), nil
+	return fmt.Sprintf("%s: %s", strings.TrimSpace(s), in), nil
 }
 
 // start is the default entrypoint to our app
@@ -45,9 +67,13 @@ func start(c *cli.Context) error {
 	if err := initConfig(); err != nil {
 		return err
 	}
-	fmt.Printf("today's team: %+v\n", teammates)
-
-	var notes string = ""
+	fmt.Printf("today's team: %s\n", teammates)
+	var notes string = "" // starts the comment block for slack
+	teamName, err := getTeamName()
+	if err != nil {
+		return err
+	}
+	notes += teamName
 	fullCount := len(teammates) - 1
 	for i := 0; i <= fullCount; i += 1 {
 		var member string
@@ -58,6 +84,6 @@ func start(c *cli.Context) error {
 		}
 		notes += note
 	}
-	fmt.Println(strings.Trim(notes, "\n"))
+	fmt.Println(notes)
 	return nil
 }
