@@ -20,6 +20,7 @@ func getUnderscores(teamName string) (underscores string) {
 
 // getTeamName accepts user input for the team name of the day
 func getTeamName() (string, error) {
+	fmt.Printf("Today's name selector: %s\n", getRandomTeamMember(teammates))
 	fmt.Print("Team Name: ")
 	reader := bufio.NewReader(os.Stdin)
 	// ReadString will block until the delimiter is entered

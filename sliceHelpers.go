@@ -27,3 +27,11 @@ func pop(a []string, i int) (string, []string) {
 	rest := remove(a, i)
 	return popped, rest
 }
+
+// getRandomTeamMember will select a random index from the teammate 
+// array and return that member's name
+func getRandomTeamMember(teammates []string) string {
+	rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
+	randIdx := rand.Intn(len(teammates))
+	return teammates[randIdx]
+}
