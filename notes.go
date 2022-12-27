@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/urfave/cli/v2"
 )
@@ -28,6 +29,10 @@ func getTeamName() (string, error) {
 	if err != nil {
 		fmt.Println("An error occured while reading input. Please try again", err)
 		return "", err
+	}
+	// be responsible if you're going up on a Tuesday
+	if time.Now().Weekday() == time.Tuesday {
+		in = fmt.Sprintf("%s (Responsible Edition)\n", strings.ReplaceAll(in, "\n", ""))
 	}
 	return fmt.Sprintf("%s%s\n", in, getUnderscores(in)), nil
 }
