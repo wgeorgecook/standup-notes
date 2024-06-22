@@ -31,7 +31,7 @@ func getTeamName() (string, error) {
 		return "", err
 	}
 	// be responsible if you're going up on a Tuesday
-	if time.Now().Weekday() == time.Tuesday {
+	if time.Now().Weekday() == time.Tuesday && stayResponsible {
 		in = fmt.Sprintf("%s (Responsible Edition)\n", strings.ReplaceAll(in, "\n", ""))
 	}
 	return fmt.Sprintf("%s%s\n", in, getUnderscores(in)), nil
@@ -75,11 +75,13 @@ func start(c *cli.Context) error {
 	}
 	fmt.Printf("today's team: %s\n", teammates)
 	var notes string = "" // starts the comment block for slack
-	teamName, err := getTeamName()
-	if err != nil {
-		return err
+	if setName {
+		teamName, err := getTeamName()
+		if err != nil {
+			return err
+		}
+		notes += teamName
 	}
-	notes += teamName
 	fullCount := len(teammates) - 1
 	for i := 0; i <= fullCount; i += 1 {
 		var member string
