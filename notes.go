@@ -31,7 +31,7 @@ func getTeamName() (string, error) {
 		return "", err
 	}
 	// be responsible if you're going up on a Tuesday
-	if time.Now().Weekday() == time.Tuesday {
+	if time.Now().Weekday() == time.Tuesday && stayResponsible {
 		in = fmt.Sprintf("%s (Responsible Edition)\n", strings.ReplaceAll(in, "\n", ""))
 	}
 	return fmt.Sprintf("%s%s\n", in, getUnderscores(in)), nil

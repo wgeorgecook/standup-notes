@@ -36,6 +36,11 @@ func main() {
 				Usage:       "enable selecting a team name for your notes.",
 				Destination: &setName,
 			},
+			&cli.BoolFlag{
+				Name:        "stay-responsible",
+				Usage:       "remind your users to be responsible on a Tuesday. Requires set-name=true",
+				Destination: &stayResponsible,
+			},
 		},
 	}
 

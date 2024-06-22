@@ -30,6 +30,10 @@ var (
 	// setName indicates that we should prompt for a team
 	// name when starting notes
 	setName bool
+
+	// stayResponsible indicates that we should remind the team to be
+	// responsible when going up on a Tuesday. Requuires setName = true.
+	stayResponsible bool
 )
 
 // order is a set of enums to type which order we cycle through
