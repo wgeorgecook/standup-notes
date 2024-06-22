@@ -31,6 +31,11 @@ func main() {
 					", and 'random', with 'random' being the default behavior.",
 				Destination: &order,
 			},
+			&cli.BoolFlag{
+				Name:        "set-name",
+				Usage:       "enable selecting a team name for your notes.",
+				Destination: &setName,
+			},
 		},
 	}
 

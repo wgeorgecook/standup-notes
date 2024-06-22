@@ -75,11 +75,13 @@ func start(c *cli.Context) error {
 	}
 	fmt.Printf("today's team: %s\n", teammates)
 	var notes string = "" // starts the comment block for slack
-	teamName, err := getTeamName()
-	if err != nil {
-		return err
+	if setName {
+		teamName, err := getTeamName()
+		if err != nil {
+			return err
+		}
+		notes += teamName
 	}
-	notes += teamName
 	fullCount := len(teammates) - 1
 	for i := 0; i <= fullCount; i += 1 {
 		var member string
