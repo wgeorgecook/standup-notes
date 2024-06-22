@@ -16,3 +16,6 @@ Standup supports three different notes generations strategies:
 
 ## Load From File
 Sometimes you don't want to have to edit the source code and recompile yourself. Luckily, we support loading teammate names from a comma separated text file. You can pass the `--from-file filePath` argument to the command line interface and it will attempt to load the file and create a string slice from the file. See `teammate.txt` for an example file.
+
+## Team Name
+If you provide the `--set-name` flag, the program will pick a random attendee to designate a team name. This name is prepended to the notes when it renders. Additionally, `--stay-responsible` can be provided to do a check on the day. If the day is Tuesday, the program will remind your users to stay responsbile if they are going up on a Tuesday.
