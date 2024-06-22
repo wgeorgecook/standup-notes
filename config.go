@@ -70,9 +70,7 @@ func initConfig() error {
 
 	// add any guests to the teammates array if guests are provided
 	if guest.Value() != nil {
-		for _, member := range guest.Value() {
-			teammates = append(teammates, member)
-		}
+		teammates = append(teammates, guest.Value()...)
 	}
 
 	// if the order provided is sorted by the alphabet, make sure to
