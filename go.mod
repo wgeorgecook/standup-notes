@@ -1,4 +1,4 @@
-module standup
+module github.com/wgeorgecook/standup-notes
 
 go 1.18
 
